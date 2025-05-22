@@ -23,14 +23,17 @@ sql
 Copy
 Edit
 
-## 🛠 Components
+🛠 Components (Updated)
+IngestDateUpdater.cls
+A Schedulable Apex class that:
 
-### `IngestDateUpdater.cls`
-
-A Schedulable class that:
-- Gathers all `Jellyfish_Company__c` records with ingest dates
-- Deduplicates to find the latest ingest date per Account
-- Updates `Opportunity.Date_of_First_Data_Ingest_Auto__c` on relevant `New Business` opps
+Gathers all Jellyfish_Company__c records with non-null Date_of_First_Data_Ingest_Auto__c.
+Deduplicates to retain only the most recent ingest date per Account.
+Queries all open Opportunities of Type = 'New Business'.
+Updates two fields on each matching Opportunity:
+Date_of_First_Data_Ingest_Auto__c ← from Jellyfish Company
+First_Data_Ingest_Date_Set_on_Date__c ← set to Datetime.now() to track when the update occurred
+This logic runs safely in bulk and is designed for daily execution.
 
 ### `IngestDateUpdaterTest.cls`
 

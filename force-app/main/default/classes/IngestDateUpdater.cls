@@ -65,6 +65,7 @@ global class IngestDateUpdater implements Schedulable {
             System.debug('OppId: ' + opp.Id + ' | Name: ' + opp.Name + ' | AccountId: ' + opp.AccountId + ' | Ingest Date: ' + ingestDate);
             oppIds.add(opp.Id);
             opp.Date_of_First_Data_Ingest_Auto__c = ingestDate;
+            opp.First_Data_Ingest_Date_Set_on_Date__c = Datetime.now();
         }
 
         update openOpps;
